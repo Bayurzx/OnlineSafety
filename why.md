@@ -80,7 +80,7 @@ Moving forward, we aim to continue building on the foundations we've established
 ## What's next for OnlineSafetyGame
 Expansion of Content:
 
-Our vision is to develop additional chapters that cover various aspects of technology, including data privacy, cybersecurity, and emerging technologies.
+Our vision is to develop additional chapters that cover various aspects of technology, including data privacy, cybersecurity, and emerging technologies especially the LLM trend.
 Users will have the opportunity to explore and learn about different online safety topics in a comprehensive and engaging manner.
 Enhanced Interactivity and Engagement:
 
@@ -94,3 +94,41 @@ Bug Fixes and Optimization:
 
 We acknowledge the challenges we faced during development, particularly with regard to automating contract integration and deployment.
 Our next steps include rewriting and updating the packages for production, addressing bugs, and optimizing the game for a seamless and stable experience.
+
+
+
+# Built with
+Languages:
+
+Solidity
+Frameworks:
+
+React.js
+Next.js
+Design Framework:
+
+Tailwind CSS
+Testing:
+
+Cypress
+Deployment and Automation:
+
+Hardhat
+CircleCI
+AWS
+Vercel
+Blockchain and Oracle Services:
+
+Chainlink
+Web3 Integration:
+
+Web3 wallets
+Cloud Services:
+
+AWS
+
+
+https://chainlink-hack-frontend.vercel.app/
+https://youtu.be/vwk8d62gPKQ
+https://github.com/Bayurzx/OnlineSafety
+

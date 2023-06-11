@@ -5,6 +5,7 @@
   "scripts": {
     "test": "yarn hardhat test",
     "test-staging": "yarn hardhat test --network sepolia",
+    "deploy": "yarn hardhat deploy --network sepolia",
     "lint": "yarn solhint 'contracts/*.sol'",
     "lint:fix": "yarn solhint 'contracts/**/*.sol' --fix",
     "coverage": "yarn hardhat coverage"
