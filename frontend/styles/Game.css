@@ -1,0 +1,465 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app {
+    height: 100vh;
+    display: flex;
+    background-color: #020230;
+    color: white;
+}
+
+.main {
+    width: 95%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #23283c), url("/assets/bg_game.gif") center;
+    display: flex;
+    flex-direction: column;
+}
+
+.floatObject {
+    animation: MoveUpDown 1s linear infinite;
+    left: 0;
+    bottom: 0;
+}
+
+@keyframes MoveUpDown {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-50px);
+    }
+}
+
+.top {
+    height: 50%;
+    position: relative;
+}
+
+.timer {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 5px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 700;
+    position: absolute;
+    bottom: 10px;
+    left: 80px;
+}
+
+.bottom {
+    height: auto;
+}
+
+.GameQuiz {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.question {
+    width: 80%;
+    background: linear-gradient(#8b8439, black);
+    border: 2px solid #FFD700;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.answers {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.answer {
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(#0e0124, #22074d);
+    border: 1px solid #FFD700;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0 10px 20px 10px;
+    cursor: pointer;
+}
+
+.answer:hover,
+.answer.active {
+    background: #594e30;
+}
+
+.answer.correct {
+    animation: correct 3s ease forwards;
+}
+
+@keyframes correct {
+
+    0%,
+    22%,
+    42% {
+        background: mediumblue;
+    }
+
+    20%,
+    40%,
+    60% {
+        background: linear-gradient(#0e0124,
+                #22074d);
+    }
+
+    62%,
+    100% {
+        background: green;
+    }
+}
+
+.answer.wrong {
+    animation: wrong 3s ease forwards;
+}
+
+@keyframes wrong {
+
+    0%,
+    22%,
+    42% {
+        background: mediumblue;
+    }
+
+    20%,
+    40%,
+    60% {
+        background: linear-gradient(#0e0124,
+                #22074d);
+    }
+
+    62%,
+    100% {
+        background: crimson;
+    }
+}
+
+.pyramid {
+    width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.moneyList {
+    list-style: none;
+    width: auto;
+    padding: 20px;
+}
+
+.moneyListItem {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.moneyListItem.active {
+    background-color: teal;
+}
+
+.moneyListItemNumber {
+    font-size: 18px;
+    font-weight: 100;
+    width: 30%;
+}
+
+.moneyListItemAmount {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.earnedContent {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.earnedContent.congrats {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/assets/congrats.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.earnedContent .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.earnedContent .content .endText {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.earnedContent .content h3.endText {
+    font-weight: 300;
+}
+
+.earnedContent .content .tryAgain {
+    padding: 12px 0;
+    width: 20%;
+    background: mediumblue;
+    color: #eee;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 1s ease;
+}
+
+.earnedContent .content .tryAgain:hover {
+    background: linear-gradient(#100241, black);
+}
+
+.start {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/assets/bg_start.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+.start .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.start .content .github {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color: #eee;
+}
+
+.start .content .github a {
+    text-decoration: none;
+    color: #eee;
+    background: #22074d;
+    padding: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.6s ease all;
+}
+
+.start .content .github a:hover {
+    color: #22074d;
+    background: #eee;
+}
+
+.start .content .wrapper {
+    width: 500px;
+    height: auto;
+    background-color: #0352b8;
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 2rem;
+}
+
+.start .content .wrapper label {
+    color: #eee;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-left: 5px;
+    margin-bottom: 5px;
+
+}
+
+.start .content .wrapper input {
+    width: 100%;
+    height: 40px;
+    outline: none;
+    padding: 0 1rem;
+    background-color: #eee;
+    border: none;
+    border-radius: 7px;
+    color: #22074d;
+    font-size: 1rem;
+    caret-color: #22074d;
+}
+
+.start .content .wrapper input::placeholder {
+    font-size: 0.9rem;
+    color: #22074d;
+}
+
+.start .content .wrapper code {
+    color: crimson;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.start .content .wrapper .btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.start .content .wrapper button {
+    padding: 12px 0;
+    width: 50%;
+    background: #04043f;
+    color: #eee;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 1s ease;
+}
+
+.start .content .wrapper button:hover {
+    background: linear-gradient(#7163a1, black);
+}
+
+@media screen and (max-width: 767px) {
+    .start .content .wrapper {
+        width: 100%;
+    }
+
+    .main {
+        width: auto;
+    }
+
+    .pyramid {
+        width: auto;
+    }
+
+    .moneyList {
+        padding: 20px 5px;
+    }
+
+    .moneyListItem {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .moneyListItemNumber {
+        display: none;
+    }
+
+    .moneyListItemAmount {
+        font-size: 11px;
+    }
+
+    .top {
+        height: 50%;
+        position: relative;
+    }
+
+    .timer {
+        width: 50px;
+        height: 50px;
+        border: 3px solid white;
+        font-size: 20px;
+        font-weight: 500;
+        bottom: 20px;
+        left: 20px;
+    }
+
+    .bottom {
+        height: auto;
+    }
+
+    .question {
+        width: 90%;
+        padding: 20px 15px;
+        border-radius: 10px;
+        font-size: 17px;
+    }
+
+    .answers {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .answer {
+        width: 40%;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(#0e0124, #22074d);
+        border: 1px solid white;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 300;
+        margin: 0 10px 20px 10px;
+        cursor: pointer;
+    }
+
+    .earnedContent .content .endText {
+        font-size: 18px;
+    }
+
+    .earnedContent .content .tryAgain {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:1024px) and (min-width:768px) {
+    .moneyListItemNumber {
+        font-size: 15px;
+        font-weight: 100;
+        width: 30%;
+    }
+
+    .moneyListItemAmount {
+        font-size: 18px;
+        font-weight: 300;
+    }
+}
