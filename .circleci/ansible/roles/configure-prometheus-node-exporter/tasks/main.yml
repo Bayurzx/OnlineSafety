@@ -1,0 +1,63 @@
+- name: "create a user for Prometheus Node Exporter"
+  become: true
+
+  shell: |
+    sudo useradd --no-create-home node_exporter
+
+- name: "install Node Exporter binaries."
+  shell: |
+    wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+    tar xzf node_exporter-1.0.1.linux-amd64.tar.gz
+    sudo cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/node_exporter
+    rm -rf node_exporter-1.0.1.linux-amd64.tar.gz node_exporter-1.0.1.linux-amd64
+
+    
+- name: "add node-exporter service configuration."
+  become: true
+  copy:
+    src: node-exporter.service
+    dest: /etc/systemd/system/
+
+- name: "enable node_exporter service"
+  become: true
+  systemd:
+    name: node-exporter
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+# i Ran this code manually. As per given instruction
+# - name: "Install Alertmanager"
+#   shell: |
+#     wget https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-amd64.tar.gz
+#     tar xvfz alertmanager-0.21.0.linux-amd64.tar.gz
+
+#     sudo cp alertmanager-0.21.0.linux-amd64/alertmanager /usr/local/bin
+#     sudo cp alertmanager-0.21.0.linux-amd64/amtool /usr/local/bin/
+#     sudo mkdir /var/lib/alertmanager
+
+#     rm -rf alertmanager*
+
+# - name: "Add Alertmanagers configuration."
+#   become: true
+#   copy:
+#     src: alertmanager.yml
+#     dest: /etc/prometheus/
+
+# - name: "Add Alertmanagers service."
+#   become: true
+#   copy:
+#     src: alertmanager.service
+#     dest: /etc/systemd/system/
+
+# - name: "Configure Systemd for alertmanager"
+#   shell: |
+#     sudo systemctl daemon-reload
+#     sudo systemctl enable alertmanager
+#     sudo systemctl start alertmanager
+
+# - name: "Create a Alert Rule."
+#   become: true
+#   copy:
+#     src: rules.yml
+#     dest: /etc/prometheus/
