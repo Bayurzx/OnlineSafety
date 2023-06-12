@@ -11,7 +11,11 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "onlinesafety-${ID}"
-      AccessControl: PublicRead
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html

@@ -137,12 +137,7 @@ For any inquiries or feedback, please reach out to
 
 Thank you for your interest in the OnlineSafetyGame. Let's have fun while learning and promoting online safety! 😄🔒
 
-Buy Me Coffee
----
-<iframe src="https://nowpayments.io/embeds/donation-widget?api_key=TEF3EEX-MSCMF8R-MTMYQEM-37X7B2Q&source=lk_donation&medium=referral" frameborder="0" scrolling="no" style="overflow-y: hidden;" width="354" height="680"></iframe>
-
-<!-- 
+---    
 <a href="https://nowpayments.io/donation?api_key=TEF3EEX-MSCMF8R-MTMYQEM-37X7B2Q&source=lk_donation&medium=referral" target="_blank">
-    <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Crypto donation button by NOWPayments">
+  <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee">
 </a>
-     -->
