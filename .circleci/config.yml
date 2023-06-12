@@ -74,7 +74,7 @@ jobs:
           command: |
             cd backend
             yarn
-            yarn build
+
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -323,9 +323,10 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      - cypress/run:
+
+      - cypress/run: # test-frontend
           package-manager: 'yarn'
-          start-command: 'yarn start'
+          start-command: 'cd backend; yarn; yarn test'
           requires: [build-frontend]
 
       - test-backend:
