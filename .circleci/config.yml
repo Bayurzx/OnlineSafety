@@ -82,7 +82,7 @@ jobs:
   test-frontend:
     executor: cimg/node:18.14
     steps:
-      - checkout
+      # - checkout
       - restore_cache:
           keys: [frontend-build]
       - cypress/run:
