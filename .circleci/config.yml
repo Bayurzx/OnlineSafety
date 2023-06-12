@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@3.1.2
+  cypress: cypress-io/cypress@3
   slack: circleci/slack@4.10.1
 
 parameters:
@@ -78,6 +78,16 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+
+  test-frontend:
+    executor: cimg/node:18.14
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - cypress/run:
+          package-manager: "yarn"
+          start-command: "yarn test"
 
   test-backend:
     docker:
@@ -323,11 +333,8 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      - cypress/run:
-          package-manager: 'yarn'
-          start-command: 'yarn start'
+      - test-frontend:
           requires: [build-frontend]
-
       - test-backend:
           requires: [build-backend]
 
