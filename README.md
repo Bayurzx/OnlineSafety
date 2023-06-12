@@ -1,144 +1,141 @@
-# OnlineSafetyGame App
+[![OnlineSafetyGame](./frontend/public/assets/OnlineSafetyLogo.jpg)OnlineSafetyGame](https://chainlink-hack-frontend.vercel.app/)
 
-## Inspiration
-The inspiration behind the OnlineSafetyGame stems from the rapid advancements in technology, particularly in the field of Artificial Intelligence (AI) 🤖. We were motivated by the realization that as technology becomes more prevalent in our lives, it is crucial to bring as many individuals as possible along for the ride , regardless of their technical expertise. We believe that everyone has a responsibility to navigate the online world safely and responsibly, and we wanted to create a project that bridges the gap between technology and user education. The world is changing fast and we all have a part in it
+OnlineSafetyGame
+================
 
-## What it does ~ atleast what we are working towards `φ(゜▽゜*)♪` ~
-### At the front...
-The OnlineSafetyGame is an interactive web-based application designed to educate users about online safety while also exploring various areas and trends in technology. It offers a wide range of quizzes and challenges that cover different aspects of online safety and emerging tech topics. Combining storytelling and interactive elements, users are engaged and encouraged to learn about the importance of online safety. Real scenarios and must make decisions that promote safe online practices, all while gaining valuable knowledge and skills. The game fosters critical thinking and empowers users to make informed choices to protect their personal information and privacy online. With its accessible format and engaging content, the OnlineSafetyGame aims to make learning about online safety interesting and easily accessible to all.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
+[![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafetyGame/issues) 
+[![GitHub stars](https://img.shields.io/github/stars/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafetyGame/stargazers)
 
+An immersive web-based game that educates users about online safety and emerging technology while providing an engaging and entertaining experience.
 
-### At the back...
-**Player Management**: The backend system keeps track of the players participating in the game. It maintains a database of player information, including their scores and participation history.
+![OnlineSafetyGame Screenshot](./frontend/public/Screenshot.gif)
 
-**Gameplay and Scoring:** When a player enters the game, they are allowed to play and answer the quizzes within a fixed duration. The backend handles the logic and scoring of each quiz, calculating the player's score based on their correct answers.
+Inspiration
+-----------
 
-**Reward Distribution**: At the end of the gameplay duration, the backend system automatically determines the top three players with the highest scores. These players are awarded some amount of Ethereum (ETH) as a reward for their performance. Additionally, the system selects one lucky player randomly using Chainlink's VRF nodes randomness feature and rewards them as well.
+🌟 The inspiration behind the OnlineSafetyGame stems from the rapid advancements in technology, particularly in the field of Artificial Intelligence (AI). We were motivated by the realization that as technology becomes more prevalent in our lives, it is crucial to bring as many individuals as possible along for the ride, regardless of their technical expertise. We believe that everyone has a responsibility to navigate the online world safely and responsibly, and we wanted to create a project that bridges the gap between technology and user education. The world is changing fast, and we all have a part in it! 🌟
 
-**Game Reset**: After the rewards are distributed, the backend system performs an upkeep operation, periodically checking if the criteria for resetting the game are met. This includes conditions like a specific time interval, number of participants, or other predetermined factors. Once the reset criteria are fulfilled, the game starts afresh, allowing new players to participate and compete for rewards.
+Features
+--------
 
+### 🚀 At the front...
 
+-   Interactive Gameplay: Engage in a captivating game environment that combines storytelling, decision-making scenarios, and quizzes to teach users about online safety.
+-   Educational Content: Explore various topics related to online safety and emerging technologies through interactive modules and engaging challenges.
+-   Real-Life Scenarios: Experience realistic situations where users must make informed choices to promote safe online practices and understand the consequences of their actions.
+-   Reward System: Compete with other players to achieve high scores and earn rewards, encouraging healthy competition and learning.
+-   Responsive Design: Enjoy a seamless and immersive gaming experience on desktop, tablet, or mobile devices.
 
+### ⚙️ At the back...
 
+-   Player Management: Keep track of player information, scores, and participation history to provide a personalized experience.
+-   Gameplay and Scoring: Handle quiz logic and scoring to calculate player scores based on correct answers within a fixed duration.
+-   Reward Distribution: Automatically determine top performers and distribute rewards, including Ethereum (ETH), to acknowledge their achievements.
+-   Game Reset: Implement an upkeep system to periodically reset the game based on predetermined factors, allowing new players to participate and compete for rewards.
 
-## How we built it
-**How we built it**
-The OnlineSafetyGame was built using a combination of frontend and backend technologies to create an engaging and secure gaming experience. Here's a breakdown of the technologies and tools we utilized:
+Technologies Used
+-----------------
 
-### **Frontend Development:**
-Framework: We built the frontend of the application using React.js and Next.js frameworks. These frameworks provided a solid foundation for developing a responsive and interactive user interface.
-Styling: We used Tailwind CSS to enhance the visual aesthetics and ensure a consistent design throughout the application.
-Testing: To ensure the quality and functionality of the frontend, we implemented automated tests using Cypress, allowing us to simulate user interactions and validate the expected behavior.
+#### 💻 Frontend:
 
-### **Backend Development:**
-**Smart Contracts:** The core functionality of the game is implemented through Solidity smart contracts. We used Hardhat for contract development, testing, and deployment. Smart contracts automate various aspects of the game, including score submission and winner selection.
-Deployment and Automation: We leveraged CircleCI for automated deployments, streamlining the deployment process and ensuring seamless updates to the application. We deployed the application on AWS for its scalability and reliability. Additionally, we also deployed the application on Vercel, a platform known for its stability and ease of use.
+-   Framework: React.js, Next.js
+-   Styling: Tailwind CSS
+-   Testing: Cypress
 
-### **Chainlink Integration**:
-**Chainlink Automations:** Formerly known as Keepers, we integrated Chainlink Automations to enhance the game's functionality. This allowed us to automate certain tasks and maintain the game's smooth operation.
+#### ⚙️ Backend:
 
-**Chainlink VRF:** We utilized Chainlink's VRF (Verifiable Random Function) nodes to ensure fair and random selection of winners. This adds an additional layer of security and transparency to the winner selection process.
+-   Smart Contracts: Solidity, Hardhat
+-   Deployment: CircleCI, AWS, Vercel
 
-By utilizing a combination of frontend frameworks, automated testing, smart contracts, deployment automation, and integrating Chainlink's VRF and Automations, we were able to build the OnlineSafetyGame, providing users with an immersive and secure gaming experience while learning about online safety.
+#### 🔗 Integration:
 
+-   Chainlink: VRF (Verifiable Random Function) nodes
+-   Chainlink Automations
 
-## Challenges we ran into
-Throughout the development process, we faced several challenges that required innovative solutions and diligent problem-solving. Here are the key challenges we encountered:
+## Installation Backend
+------------
 
-1. **Integration with Chainlink's VRF and Automations**
-One of our primary goals was to integrate Chainlink's VRF and Automations into the game to ensure fair winner selection and automate certain game operations. However, due to time constraints, we faced difficulties automating the process of adding the contract to Chainlink's VRF and Automations. This required additional time and effort, which we plan to address in future iterations of the project.
+1.  Clone the repository:
 
-2. **Automated Deployment and Deprecated Packages**
-Automating the deployment process was crucial for ensuring a seamless experience for our users. We encountered various bugs and issues, particularly with deprecated packages. This required us to spend significant time troubleshooting and finding alternative solutions. To improve the stability and reliability of the application, we are committed to rewriting and updating the packages used for production deployment.
+``` sh
+git clone https://github.com/bayurzx/OnlineSafetyGame.git
+cd backend
+```
+2.  Install dependencies:
 
-3. **Balancing Educational Content and Gameplay**
-One of the challenges we faced was finding the right balance between educational content and engaging gameplay. We wanted to provide valuable information about online safety while ensuring that the game remained exciting and entertaining for users. Sadly we are but overworked programmers and achieving this balance actually required careful planning, collaboration, and continuous iteration to deliver an immersive gaming experience while imparting important online safety knowledge.
+``` sh
+cd OnlineSafetyGame
+yarn
+```
+    
 
-Sorry in advance if the concept is a bit underwhelming we are testing water here
+3.  Set up the environment variables:
+    -   Create a `.env` file in the root directory
+    -   Define the required environment variables (e.g., API keys, Ethereum provider)
 
-## Accomplishments that we're proud of
-First of all, I can't believe we made this in time! But here are some
+```sh
+yarn dev
+```
 
-**Interactive Experience:**
+**Note**: You don't need to do anything if you decie to use my contract. Contact me below
 
-Successfully created an immersive and interactive gaming experience that combines education and entertainment.
-Implemented storytelling elements and decision-making scenarios to provide users with a realistic and engaging environment for learning about online safety.
-**Seamless Integration of Web3 Technologies and Smart Contracts:**
-
-Integrated web3 technologies for seamless payment processing, allowing users to participate in the game using their web3 wallets.
-Utilized smart contracts to automate various game mechanics, such as score submission and winner selection, ensuring a smooth and efficient gameplay experience.
-Fair and Transparent Winner Selection with Chainlink's VRF Nodes:
-
-**Incorporated Chainlink's VRF nodes to ensure fair and transparent winner selection.**
-By leveraging the Verifiable Random Function, we have enhanced the credibility of the game and provided users with confidence in the integrity of the results.
-
-
-## What we learned
-During the development of the OnlineSafetyGame, we had the pleasure of collaborating with the Chainlink community and leveraging their robust decentralized oracle network. Working alongside passionate individuals like Patrick Collins, we learned firsthand the power and potential of Chainlink's technology.
-
-Through the integration of Chainlink's VRF nodes, we ensured fair and transparent randomization within our game, enhancing the credibility and integrity of the user experience. This experience deepened our understanding of web3 technologies, smart contracts, and decentralized systems.
-
-We are grateful for the support and guidance we received from the Chainlink community, which played a significant role in our project's success. Their expertise and collaborative spirit allowed us to create an immersive and educational gaming experience.
-
-Moving forward, we aim to continue building on the foundations we've established, exploring new ways to engage users and educate them about online safety. The knowledge gained from our collaboration with Chainlink will undoubtedly shape our future endeavors, as we strive to empower individuals and contribute to a safer online environment.
-
-
-
-## What's next for OnlineSafetyGame
-**Expansion of Content:**
-
-Our vision is to develop additional chapters that cover various aspects of technology, including data privacy, cybersecurity, and emerging technologies especially the LLM trend.
-Users will have the opportunity to explore and learn about different online safety topics in a comprehensive and engaging manner.
-Enhanced Interactivity and Engagement:
-
-We plan to incorporate more advanced features and gamification elements to further enhance the interactivity and engagement of the game.
-This will ensure that users remain immersed and motivated while learning about online safety.
-Continuous Improvement and Updates:
-
-Gathering user feedback and conducting further research will be a priority to continuously refine and update the content of the OnlineSafetyGame.
-This will allow us to address emerging online safety concerns and ensure that the game remains relevant and up-to-date.
-Bug Fixes and Optimization:
-
-We acknowledge the challenges we faced during development, particularly with regard to automating contract integration and deployment.
-Our next steps include rewriting and updating the packages for production, addressing bugs, and optimizing the game for a seamless and stable experience.
+## Installation Frontend
+------------
 
 
+1.  Go to frontend and Install dependencies:
 
-# Built with
+``` sh
+cd frontend
+yarn
+```
 
-Languages:
-- Solidity
-- JS
+2.  Set up the environment variables:
+    -   Create a `.env` file in the root directory
+    -   Define the required environment variables (e.g., API keys, Ethereum provider)
+    
+3.  Start the application:
 
-Frameworks:
-- React.js
-- Next.js
+```sh
+yarn dev
+```
 
-Design Framework:
-- Tailwind CSS
-
-Testing:
-- Cypress
-- Hardhat-waffle
-
-Deployment and Automation:
-- Hardhat
-- CircleCI
-- AWS
-- Vercel
-
-Blockchain and Oracle Services:
-- Chainlink
-- Web3 Integration:
-
-Web3 wallets
-- Metamask
-
-Cloud Services:
-- AWS
+4.  Open the app in your browser at `http://localhost:3000`.
 
 
-https://chainlink-hack-frontend.vercel.app/
-https://youtu.be/vwk8d62gPKQ
-https://github.com/Bayurzx/OnlineSafety
 
+Contributions
+-------------
+
+We welcome contributions from the open-source community to enhance the OnlineSafetyGame. If you would like to contribute, please follow these steps:
+
+1.  Fork the repository.
+2.  Create a new branch for your feature/fix.
+3.  Make your changes and commit them.
+4.  Push the changes to your forked repository.
+5.  Submit a pull request detailing your changes.
+
+Credits
+-------
+
+The OnlineSafetyGame was developed by Adebayo Omolumo and Ayobami Samson. We would like to acknowledge the following resources and contributors:
+
+🚀  Chainlink Doc (Those Guys Got it Right)
+-   Patrick Collins (He is why I can actually do anything right and my parent are finally proud of me)
+-   The Hackathon Community and so many repos I learn't from
+
+License
+-------
+
+This project is licensed under the [MIT License](./LICENSE).
+
+Contact
+-------
+
+For any inquiries or feedback, please reach out to
+- <a href="mailto:bayurzx@gmail.com?subject=Hello%20Adebayo&body=Hi?">Me</a>
+
+* * * * *
+
+Thank you for your interest in the OnlineSafetyGame. Let's have fun while learning and promoting online safety! 😄🔒

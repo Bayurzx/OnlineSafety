@@ -61,6 +61,9 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - save_cache:
+          paths: [/home/circleci/.cache/Cypress]
+          key: cypress-cache
 
   build-backend:
     docker:
@@ -89,6 +92,8 @@ jobs:
       # Restore from cache
       - restore_cache:
           keys: [frontend-build]
+      - restore_cache:
+          keys: [cypress-cache]
       # Your job code here
       - run:
           name: Test Frontend
