@@ -1,11 +1,11 @@
-[![OnlineSafetyGame](./frontend/public/assets/OnlineSafetyLogo.jpg)OnlineSafetyGame](https://chainlink-hack-frontend.vercel.app/)
+[![OnlineSafetyGame](./frontend/public/safety.png)  OnlineSafetyGame](https://chainlink-hack-frontend.vercel.app/)
 
 OnlineSafetyGame
 ================
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-[![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafetyGame/issues) 
-[![GitHub stars](https://img.shields.io/github/stars/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafetyGame/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
+[![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafety/issues) 
+[![GitHub stars](https://img.shields.io/github/stars/bayurzx/OnlineSafety)](https://github.com/bayurzx/OnlineSafety/stargazers)
 
 An immersive web-based game that educates users about online safety and emerging technology while providing an engaging and entertaining experience.
 
