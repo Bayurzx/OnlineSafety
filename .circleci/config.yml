@@ -44,7 +44,6 @@ commands:
                 echo "constants.zip file not found."
             fi
 
-
 jobs:
   build-frontend:
     docker:
@@ -82,18 +81,14 @@ jobs:
 
   test-frontend:
     docker:
-      # Docker image here
       - image: cimg/node:18.14
     steps:
-      # Checkout code from git
       - checkout
-      # Restore from cache
       - restore_cache:
           keys: [frontend-build]
-      # Your job code here
       - cypress/run:
-          package-manager: 'yarn'
-          start-command: 'yarn test'
+          package-manager: "yarn"
+          start-command: "yarn test"
 
   test-backend:
     docker:
@@ -131,14 +126,12 @@ jobs:
               --stack-name "onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
 
-
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
   deploy-backend:
     docker:
-
       - image: python:3.10-alpine3.16
     steps:
       # Checkout code from git
@@ -169,7 +162,6 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-
 
   deploy-frontend:
     docker:
@@ -240,7 +232,6 @@ jobs:
                 return 1
             fi
 
-
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
@@ -301,7 +292,7 @@ jobs:
           command: |
             # your code here
             yum -y install tar gzip
-      
+
       - attach_workspace:
           at: ~/
 
@@ -316,7 +307,7 @@ jobs:
             echo "${CIRCLE_WORKFLOW_ID:0:7}"
 
             for i in "${STACKS[@]}"; do
-            
+
               echo "On stack: $i"
 
               if [[ "$i" != "onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}" ]] && [[ "$i" =~ "onlinesafety" ]]
@@ -333,13 +324,10 @@ jobs:
 
             done
 
-
-          
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - revert-migrations:
           revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-
 
 workflows:
   default:
@@ -351,13 +339,11 @@ workflows:
       - test-backend:
           requires: [build-backend]
 
-
       - deploy-infrastructure:
           requires: [test-frontend, test-backend]
           filters:
             branches:
               only: [feature]
-
 
       - deploy-frontend:
           requires: [deploy-infrastructure]
