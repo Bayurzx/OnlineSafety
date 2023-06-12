@@ -71,14 +71,14 @@ yarn
     
 
 3.  Set up the environment variables:
-    -   Create a `.env` file in the root directory
+    -   Create a `.env` file in the backend directory
     -   Define the required environment variables (e.g., API keys, Ethereum provider)
 
 ```sh
 yarn dev
 ```
 
-**Note**: You don't need to do anything if you decie to use my contract. Contact me below
+**Note**: You don't need to do anything if you decie to use my contract address. Contacts me below
 
 ## Installation Frontend
 ------------
@@ -91,17 +91,14 @@ cd frontend
 yarn
 ```
 
-2.  Set up the environment variables:
-    -   Create a `.env` file in the root directory
-    -   Define the required environment variables (e.g., API keys, Ethereum provider)
     
-3.  Start the application:
+2.  Start the application:
 
 ```sh
 yarn dev
 ```
 
-4.  Open the app in your browser at `http://localhost:3000`.
+3.  Open the app in your browser at `http://localhost:3000`.
 
 
 
@@ -139,3 +136,13 @@ For any inquiries or feedback, please reach out to
 * * * * *
 
 Thank you for your interest in the OnlineSafetyGame. Let's have fun while learning and promoting online safety! 😄🔒
+
+Buy Me Coffee
+---
+<iframe src="https://nowpayments.io/embeds/donation-widget?api_key=TEF3EEX-MSCMF8R-MTMYQEM-37X7B2Q&source=lk_donation&medium=referral" frameborder="0" scrolling="no" style="overflow-y: hidden;" width="354" height="680"></iframe>
+
+<!-- 
+<a href="https://nowpayments.io/donation?api_key=TEF3EEX-MSCMF8R-MTMYQEM-37X7B2Q&source=lk_donation&medium=referral" target="_blank">
+    <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Crypto donation button by NOWPayments">
+</a>
+     -->
