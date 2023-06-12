@@ -332,7 +332,7 @@ workflows:
           requires: [build-backend]
 
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend]
+          requires: [cypress/run, test-backend]
           filters:
             branches:
               only: [feature]
