@@ -328,6 +328,7 @@ workflows:
           package-manager: 'yarn'
           start-command: 'yarn ; yarn test'
           working-directory: frontend
+          cache-paths: 'frontend/package.json'
           requires: [build-frontend]
 
       - test-backend:
