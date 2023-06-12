@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "cypress": "cypress run --component",
+    "export": "next export",
+    "test": "cypress run --component",
     "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "antd": "^5.6.1",
     "moralis": "^1.8.0",
     "next": "12.1.5",
     "react": "18.0.0",

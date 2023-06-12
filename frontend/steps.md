@@ -84,16 +84,28 @@ jobs:
 
 ## test-frontend:
 ## test-backend:
-## scan-frontend:
-## scan-backend:
 ## deploy-infrastructure:
-## configure-infrastructure:
-## run-migrations:
+## run-migrations: ??
 ## deploy-frontend:
 ## deploy-backend:
 ## smoke-test:
 ## cloudfront-update:
 ## cleanup:
+
+
+aws cloudformation deploy `
+    --template-file files/cloudfront.yml `
+    --stack-name InitialStack `
+    --parameter-overrides WorkflowID=onlinesafety-bayurzx
+
+
+
+
+
+
+
+
+
 
 
 # Bonus
