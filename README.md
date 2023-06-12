@@ -1,10 +1,10 @@
-[![OnlineSafetyGame](./frontend/public/safety.png)  OnlineSafetyGame](https://chainlink-hack-frontend.vercel.app/)
+[OnlineSafetyGame On Vercel](https://chainlink-hack-frontend.vercel.app/)
 
 OnlineSafetyGame
 ================
-
+[![Bayurzx](https://circleci.com/gh/Bayurzx/OnlineSafety.svg?style=svg)](https://app.circleci.com/pipelines/github/Bayurzx/OnlineSafety)  
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
-[![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafetyGame)](https://github.com/bayurzx/OnlineSafety/issues) 
+[![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafety)](https://github.com/bayurzx/OnlineSafety/issues) 
 [![GitHub stars](https://img.shields.io/github/stars/bayurzx/OnlineSafety)](https://github.com/bayurzx/OnlineSafety/stargazers)
 
 An immersive web-based game that educates users about online safety and emerging technology while providing an engaging and entertaining experience.
@@ -59,7 +59,7 @@ Technologies Used
 1.  Clone the repository:
 
 ``` sh
-git clone https://github.com/bayurzx/OnlineSafetyGame.git
+git clone https://github.com/bayurzx/OnlineSafety.git
 cd backend
 ```
 2.  Install dependencies:
