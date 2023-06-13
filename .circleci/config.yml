@@ -146,18 +146,18 @@ jobs:
       # Checkout code from git
       - checkout
 
-      # attach workspace
-      - attach_workspace:
-          at: ~/
+      # # attach workspace
+      # - attach_workspace:
+      #     at: ~/
       - run:
-          name: Install dependencies
+          name: Install dependencies for AWS
           command: |
             # your code here
             sudo apt update ; sudo apt install libc6 groff less ; 
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ;
             sudo ./aws/install ; aws --version
       - run:
-          name: Deploy backend
+          name: Install Packages and Deploy backend
           command: |
             # your code here
             echo "checking if constants have already been deployed..."
@@ -181,9 +181,21 @@ jobs:
                 cat frontend/constants/contractAddresses.json
                 cd frontend/constants/
                 zip -r constants.zip *
+
             else
                 echo "File not found: frontend/constants/contractAddresses.json"
             fi            
+
+      - run:
+          name: Send constants.zip files to S3
+          command: |
+            aws s3 cp frontend/constants.zip s3://onlinesafety-files/
+
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/frontend/constants.zip
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
@@ -200,10 +212,30 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Install dependencies
+          name: Install dependencies for AWS
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs yarn curl aws-cli
+            sudo apt update ; sudo apt install libc6 groff less ; 
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ;
+            sudo ./aws/install ; aws --version
+
+      - run:
+          name: Get constants from Backend
+          command: |
+            # Your code here
+            cd frontend
+            cat constants/contractAddresses.json 
+            if [ -f "constants.zip" ]; then
+                unzip -o constants.zip -d .
+                rm constants.zip
+                cat constants/contractAddresses.json 
+
+            else
+                echo "constants.zip file not found."
+                echo "Err: constants did not change."
+                cat constants/contractAddresses.json 
+                return 1
+            fi
 
       - run:
           name: Deploy frontend objects
@@ -373,10 +405,10 @@ workflows:
             branches:
               only: [circleci]
 
-      - deploy-frontend:
-          requires: [deploy-infrastructure]
       - deploy-backend:
-          requires: [deploy-frontend]
+          requires: [test-backend]
+      - deploy-frontend:
+          requires: [deploy-infrastructure, deploy-backend]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
