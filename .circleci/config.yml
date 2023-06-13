@@ -141,7 +141,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: python:3.10-alpine3.16
+      - image: cimg/node:18.14
     steps:
       # Checkout code from git
       - checkout
@@ -153,21 +153,37 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs yarn tree aws-cli
+            sudo apt update ; sudo apt install libc6 groff less ; 
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ;
+            sudo ./aws/install ; aws --version
       - run:
           name: Deploy backend
           command: |
             # your code here
-            echo "Contents  of the frontend\constants\contractAddresses.json before deploy"
-            cat frontend\constants\contractAddresses.json
+            echo "checking if constants have already been deployed..."
+
+            if [ -f "frontend/constants/contractAddresses.json" ]; then
+              echo "Contents of the frontend/constants/contractAddresses.json before deploy\n"
+              cat frontend/constants/contractAddresses.json
+            else
+              echo "File: frontend/constants/contractAddresses.json aint created yet"
+            fi
+
+            echo "going to backend and starting deployment"
             cd backend
             yarn
             yarn deploy
             cd ..
 
-            echo "Contents  of the frontend\constants\contractAddresses.json after deploy"
-            cat frontend\constants\contractAddresses.json
-            zip -r constants.zip *
+            cat frontend/constants/contractAddresses.json
+            if [ -f "frontend/constants/contractAddresses.json" ]; then
+                echo "Contents of the frontend/constants/contractAddresses.json before deploy"
+                cat frontend/constants/contractAddresses.json
+                cd frontend/constants/
+                zip -r constants.zip *
+            else
+                echo "File not found: frontend/constants/contractAddresses.json"
+            fi            
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
@@ -175,7 +191,7 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: python:3.10-alpine3.16
+      - image: cimg/node:18.14
     steps:
       # Checkout code from git
       - checkout
@@ -197,6 +213,7 @@ jobs:
             yarn
             yarn build
             yarn export
+            ls
             aws s3 cp out s3://onlinesafety-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
