@@ -3,7 +3,8 @@ const fs = require("fs")
 const { network } = require("hardhat")
 
 module.exports = async () => {
-    if (process.env.UPDATE_FRONT_END) {
+    if (process.env.UPDATE_FRONT_END && process.env.DO_NOT_RUN_FOR_CICD) {
+        // process.env.DO_NOT_RUN_FOR_CICD will not be added as an env in circleci
         console.log("Writing constants to chain/constants dir...")
         await updateContractAddresses()
         await updateAbi()
