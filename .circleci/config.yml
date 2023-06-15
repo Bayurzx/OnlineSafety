@@ -267,27 +267,17 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      - image: python:3.10-alpine3.16
+      - image: cimg/node:18.14
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-          at: ~/
+
       - run:
-          name: Install dependencies
-          command: |
-            # your code here
-            apk add --update --no-cache curl aws-cli tar gzip nodejs npm
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       # your code here
-      - run:
-          name: Frontend smoke test.
+          name: Frontend smoke test to check if site works
           command: |
             # your code here
             expected_title="Online Safety Game"
-            url="https://chainlink-hack-frontend.vercel.app/"
+            url="onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com"
 
             # Fetch the title using curl and extract the text between <title> tags
             title=$(curl -s "$url" | grep -oP '(?<=<title>)[^<]+')
@@ -412,9 +402,9 @@ workflows:
           requires: [test-backend, deploy-infrastructure]
       - deploy-frontend:
           requires: [deploy-infrastructure, deploy-backend]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend, cloudfront-update]
       - cleanup:
           requires: [cloudfront-update]
