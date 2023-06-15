@@ -21,6 +21,7 @@ commands:
           command: |
             # Your code here
             aws s3 rm s3://onlinesafety-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            echo "Deleting the -- onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7} -- stack"
             aws cloudformation delete-stack --stack-name onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
   revert-migrations:
@@ -232,14 +233,14 @@ jobs:
             if [ -f "constants.zip" ]; then
                 unzip -o constants.zip -d .
                 rm constants.zip
-                cat constants/contractAddresses.json 
+                cat contractAddresses.json 
 
             elif aws s3 ls "s3://onlinesafety-files/constants.zip" | grep -q "constants.zip$"; then
                 echo "File exists in S3 bucket!"
                 aws s3 cp s3://onlinesafety-files/constants.zip .
                 unzip -o constants.zip -d .
                 rm constants.zip
-                cat constants/contractAddresses.json 
+                cat contractAddresses.json 
 
             else
                 echo "constants.zip file not found."
