@@ -1,7 +1,6 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@3.1.2
   slack: circleci/slack@4.10.1
 
 parameters:
@@ -35,7 +34,7 @@ commands:
           # Add when this will run
           when: on_fail
           command: |
-            cd ~/project/frontend
+            cd ~/project/frontend/constants
 
             if [ -f "constants.zip" ]; then
                 unzip -o constants.zip -d .
@@ -135,6 +134,7 @@ jobs:
               --stack-name "onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
 
+            echo "${CIRCLE_WORKFLOW_ID:0:7} was the current stack"
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
@@ -160,7 +160,7 @@ jobs:
           name: Install Packages and Deploy backend
           command: |
             # your code here
-            echo "checking if constants have already been deployed..."
+            echo "checking constants before deploy..."
 
             if [ -f "frontend/constants/contractAddresses.json" ]; then
               echo "Contents of the frontend/constants/contractAddresses.json before deploy\n"
@@ -169,7 +169,10 @@ jobs:
               echo "File: frontend/constants/contractAddresses.json aint created yet"
             fi
 
+            echo *****************************************"
             echo "going to backend and starting deployment"
+            echo *****************************************"
+
             cd backend
             yarn
             yarn deploy
@@ -177,11 +180,12 @@ jobs:
 
             cat frontend/constants/contractAddresses.json
             if [ -f "frontend/constants/contractAddresses.json" ]; then
-                echo "Contents of the frontend/constants/contractAddresses.json before deploy"
+                echo "Contents of the frontend/constants/contractAddresses.json *after* deploy"
                 cat frontend/constants/contractAddresses.json
                 cd frontend/constants/
                 zip -r constants.zip *
 
+                echo "zipped constants successfully and ready for shipping..."
             else
                 echo "File not found: frontend/constants/contractAddresses.json"
             fi            
@@ -189,13 +193,13 @@ jobs:
       - run:
           name: Send constants.zip files to S3
           command: |
-            aws s3 cp frontend/constants.zip s3://onlinesafety-files/
+            aws s3 cp frontend/constants/constants.zip s3://onlinesafety-files/constants.zip
 
 
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/frontend/constants.zip
+            - project/frontend/constants/constants.zip
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
@@ -220,25 +224,31 @@ jobs:
             sudo ./aws/install ; aws --version
 
       - run:
-          name: Get constants from Backend
+          name: Get constants from Backend or AWS bucket
           command: |
             # Your code here
-            cd frontend
-            cat constants/contractAddresses.json 
+            cd frontend/constants
+            cat contractAddresses.json 
             if [ -f "constants.zip" ]; then
+                unzip -o constants.zip -d .
+                rm constants.zip
+                cat constants/contractAddresses.json 
+
+            elif aws s3 ls "s3://onlinesafety-files/constants.zip" | grep -q "constants.zip$"; then
+                echo "File exists in S3 bucket!"
+                aws s3 cp s3://onlinesafety-files/constants.zip .
                 unzip -o constants.zip -d .
                 rm constants.zip
                 cat constants/contractAddresses.json 
 
             else
                 echo "constants.zip file not found."
-                echo "Err: constants did not change."
-                cat constants/contractAddresses.json 
+                echo "FFailing Gracefully..."
                 return 1
             fi
 
       - run:
-          name: Deploy frontend objects
+          name: Deploy frontend objects (distribution on cloudfront)
           command: |
             # your code here
             cd frontend
@@ -291,11 +301,6 @@ jobs:
             fi
 
       # Here's where you will add some code to rollback on failure
-      - destroy-environment:
-          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-
   cloudfront-update:
     docker:
       # Docker image here that supports AWS CLI
@@ -335,8 +340,6 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
   cleanup:
     docker:
@@ -374,6 +377,7 @@ jobs:
                 echo "On stack with affix: ${i: -7}"
 
                 aws s3 rm "s3://onlinesafety-${i: -7}" --recursive
+                aws s3 rm s3://onlinesafety-files/constants.zip --recursive
 
                 aws cloudformation delete-stack --stack-name "onlinesafety-frontend-${i: -7}"
               else 
@@ -384,8 +388,6 @@ jobs:
 
       - destroy-environment:
           destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
 workflows:
   default:
@@ -406,7 +408,7 @@ workflows:
               only: [circleci]
 
       - deploy-backend:
-          requires: [test-backend]
+          requires: [test-backend, deploy-infrastructure]
       - deploy-frontend:
           requires: [deploy-infrastructure, deploy-backend]
       - smoke-test:
