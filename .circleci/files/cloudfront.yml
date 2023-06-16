@@ -13,6 +13,12 @@ Parameters:
 
     Type: String
 
+  AcmCertificateArn:
+    Description: |
+      AWS Certiifcate Manager ARN to use for our cloudfornt distribution
+
+    Type: String
+
 
 Resources:
   
@@ -26,6 +32,11 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        # we add SSL/TLS certiificate here
+        ViewerCertificate:
+          # AcmCertificateArn: "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012"
+          AcmCertificateArn: !Sub "${AcmCertificateArn}"
+          SslSupportMethod: sni-only
         Origins:
           - DomainName: !Sub "onlinesafety-${WorkflowID}.s3.amazonaws.com"
             Id: webpage
@@ -37,7 +48,7 @@ Resources:
           ForwardedValues:
             QueryString: False
           TargetOriginId: webpage
-          ViewerProtocolPolicy: allow-all
+          ViewerProtocolPolicy: redirect-to-https
 
 Outputs:
   WorkflowID:
@@ -45,3 +56,9 @@ Outputs:
     Description: URL for website hosted on S3
     Export:
       Name: WorkflowID
+
+  AcmCertificateArn:
+    Value: !Sub ${AcmCertificateArn}
+    Description: The certificate ARN I created
+    Export:
+      Name: AcmCertificateArn

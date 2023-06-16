@@ -264,7 +264,7 @@ jobs:
       - revert-migrations:
           revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
-  smoke-test:
+  acceptance-test:
     docker:
       # Lightweight Docker image
       - image: cimg/node:18.14
@@ -280,7 +280,7 @@ jobs:
             url="onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com"
 
             # Fetch the title using curl and extract the text between <title> tags
-            title=$(curl -s "$url" | grep -oP '(?<=<title>)[^<]+')
+            title=$(curl -s --max-time 300 "$url" | grep -oP '(?<=<title>)[^<]+')
 
             # Compare the fetched title with the expected title
             if [[ "$title" == "$expected_title" ]]; then
@@ -314,10 +314,14 @@ jobs:
             echo $OldWorkflowID >> ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
 
+            export AcmCertificateArn=$(aws acm list-certificates \
+            --query "CertificateSummaryList[?contains(DomainName, 'onlinesafety')].CertificateArn" \
+            --output text)
+
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
-            --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:7} AcmCertificateArn=${AcmCertificateArn} \
             --tags project=OnlineSafety
 
             echo "Old WorkflowID is $OldWorkflowID"
@@ -404,7 +408,7 @@ workflows:
           requires: [deploy-infrastructure, deploy-backend]
       - cloudfront-update:
           requires: [deploy-frontend]
-      - smoke-test:
+      - acceptance-test:
           requires: [deploy-backend, deploy-frontend, cloudfront-update]
       - cleanup:
-          requires: [cloudfront-update]
+          requires: [acceptance-test]
