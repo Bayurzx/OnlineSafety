@@ -305,6 +305,24 @@ jobs:
             # your code here
             yum -y install tar gzip
       - run:
+          name: Create certificate if not already created
+          command: |
+            certificate_arn=$(aws acm list-certificates \
+              --query "CertificateSummaryList[?contains(DomainName, 'onlinesafety')].CertificateArn" \
+              --output text)
+
+            if [[ -z $certificate_arn ]]; then
+              echo "Certificate not found. Creating a new one..."
+              certificate_arn=$(aws acm request-certificate \
+                --domain-name onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com \
+                --validation-method DNS \
+                --query "CertificateArn" \
+                --output text)
+            fi
+
+            echo "Certificate ARN: $certificate_arn"
+
+      - run:
           name: Update cloudfront distribution
           command: |
             # your code here
@@ -375,6 +393,18 @@ jobs:
                 aws s3 rm s3://onlinesafety-files/constants.zip --recursive
 
                 aws cloudformation delete-stack --stack-name "onlinesafety-frontend-${i: -7}"
+
+                cert_arns=$(aws acm list-certificates --query "CertificateSummaryList[?contains(DomainName, "${i: -7}")].CertificateArn" --output text)
+
+                # Check if any certificates were found
+                if [ -z "$cert_arns" ]; then
+                  echo "No certificates found with the name 'onlinesafety'"
+                  exit 0
+                fi
+
+                # Delete the certificates in bulk
+                aws acm delete-certificate --certificate-arns $cert_arns
+
               else 
                 echo "   ***********  Old Stack NOT Found   *************    "
               fi
