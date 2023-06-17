@@ -277,20 +277,37 @@ jobs:
           command: |
             # your code here
             expected_title="Online Safety Game"
-            url="onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com"
+            url="onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
+            max_attempts=4
+            attempt=1
 
-            # Fetch the title using curl and extract the text between <title> tags
-            title=$(curl -s "$url" -m 300 | grep -oP '(?<=<title>)[^<]+')
-            echo "Title from CURL is $title"
+            while [[ $attempt -le $max_attempts ]]; do
+                echo "Attempt $attempt:"
+                echo "Fetching title using CURL..."
 
-            # Compare the fetched title with the expected title
-            if [[ "$title" == "$expected_title" ]]; then
-                echo "Title is correct: $title"
-                return 0
-            else
-                echo "Title is not correct: $title"
-                return 1
-            fi
+                # Fetch the title using curl and extract the text between <title> tags
+                title=$(curl -s "$url" -m 300 | grep -oP '(?<=<title>)[^<]+')
+
+                if [[ -n "$title" ]]; then
+                    echo "Title from CURL is: $title"
+
+                    # Compare the fetched title with the expected title
+                    if [[ "$title" == "$expected_title" ]]; then
+                        echo "Title is correct: $title"
+                        exit 0
+                    else
+                        echo "Title is not correct: $title"
+                        exit 1
+                    fi
+                else
+                    echo "CURL returned nothing. Retrying in 3 minutes..."
+                    sleep 180  # Wait for 3 minutes before retrying
+                    attempt=$((attempt + 1))
+                fi
+            done
+
+            echo "Reached maximum number of attempts. Title could not be fetched."
+            exit 1
 
       # Here's where you will add some code to rollback on failure
   cloudfront-update:
