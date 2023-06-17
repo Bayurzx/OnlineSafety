@@ -27,17 +27,21 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-          - DomainName: !Sub "onlinesafety-${WorkflowID}.s3.amazonaws.com"
+          - DomainName: !Sub "onlinesafety-${WorkflowID}.s3-website-us-east-1.amazonaws.com"
             Id: webpage
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+            #   OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+            # S3OriginConfig:
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: match-viewer # https-onlyv | http-only | match-viewer
         Enabled: True
         DefaultRootObject: index.html
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
           TargetOriginId: webpage
-          ViewerProtocolPolicy: redirect-to-https # changed from allow-all
+          ViewerProtocolPolicy: allow-all # changed back from redirect-to-https
 
 Outputs:
   WorkflowID:
