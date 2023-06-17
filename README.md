@@ -1,8 +1,15 @@
-[OnlineSafetyGame On Vercel](https://chainlink-hack-frontend.vercel.app/)
-
 OnlineSafetyGame
 ================
 [![Bayurzx](https://circleci.com/gh/Bayurzx/OnlineSafety.svg?style=svg)](https://app.circleci.com/pipelines/github/Bayurzx/OnlineSafety)  
+---
+
+[OnlineSafetyGame On Vercel](https://chainlink-hack-frontend.vercel.app/) 
+<br>
+<br>
+On Amazon AWS
+- [OnlineSafetyGame on HTTPS](https://d1zyagk7l0frws.cloudfront.net) 
+- [OnlineSafetyGame on HTTP](onlinesafety-bb392c7.s3-website-us-east-1.amazonaws.com)
+
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
 [![GitHub issues](https://img.shields.io/github/issues/bayurzx/OnlineSafety)](https://github.com/bayurzx/OnlineSafety/issues) 
 [![GitHub stars](https://img.shields.io/github/stars/bayurzx/OnlineSafety)](https://github.com/bayurzx/OnlineSafety/stargazers)
